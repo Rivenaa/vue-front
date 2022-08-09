@@ -11,12 +11,8 @@ const props = defineProps({
     type: String,
     required: true
   },
-  fillClass: {
-    type: String
-  },
-  color: {
-    type: String
-  }
+  fillClass: String,
+  color: String
 })
 
 const symbolId = computed(() => `#icon-${props.name}`)

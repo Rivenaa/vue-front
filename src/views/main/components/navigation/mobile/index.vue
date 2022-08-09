@@ -13,11 +13,13 @@
       <!-- items -->
       <li
         :ref="itemsRef"
-        v-for="(item, index) in $store.getters.categorys"
+        v-for="(item, index) in $store.getters.categories"
         :key="item.id"
         class="shrink-0 px-1.5 py-0.5 z-10 duration-200 last:mr-4"
-        :class="{ 'text-zinc-100': currentCategoryIndex === index }"
-        @click="onItemClick(index)"
+        :class="{
+          'text-zinc-100': $store.getters.currentCategoryIndex === index
+        }"
+        @click="onItemClick(item)"
       >
         {{ item.name }}
       </li>
@@ -29,15 +31,16 @@
         <Svg-icon name="hamburger" class="w-1.5 h-1.5" />
       </li>
     </ul>
-    <Popup v-model="isVisable">
-      <Menu-vue @onItemClick="onItemClick" />
+    <Popup v-model="isVisible">
+      <Menu-vue @onItemClick="onItemClick(item)" />
     </Popup>
   </div>
 </template>
 
 <script setup>
-import { ref, onBeforeUpdate, watch } from 'vue'
+import { useStore } from 'vuex'
 import { useScroll } from '@vueuse/core'
+import { ref, onBeforeUpdate, watch } from 'vue'
 import MenuVue from '../../menu/index.vue'
 
 // 滑块样式
@@ -45,9 +48,6 @@ const sliderStyle = ref({
   transform: 'translateX(0px)',
   width: '52px'
 })
-
-// 选中item的下标
-const currentCategoryIndex = ref(0)
 
 // 获取所有item元素
 let itemsEL = []
@@ -61,26 +61,28 @@ onBeforeUpdate(() => {
   itemsEL = []
 })
 
+const store = useStore()
 const ulRef = ref(null)
 const { x: ulScrollLeft } = useScroll(ulRef)
 
-watch(currentCategoryIndex, newIndex => {
-  const { left, width } = itemsEL[newIndex].getBoundingClientRect()
-  sliderStyle.value = {
-    transform: `translateX(${ulScrollLeft.value + left - 10}px)`,
-    width: `${width}px`
+watch(
+  () => store.getters.currentCategoryIndex,
+  newIndex => {
+    const { left, width } = itemsEL[newIndex].getBoundingClientRect()
+    sliderStyle.value = {
+      transform: `translateX(${ulScrollLeft.value + left - 10}px)`,
+      width: `${width}px`
+    }
   }
-})
+)
 
-const onItemClick = index => {
-  currentCategoryIndex.value = index
-  isVisable.value = false
+const onItemClick = item => {
+  store.commit('app/setCurrentCategory', item)
+  isVisible.value = false
 }
 
-const isVisable = ref(false)
+const isVisible = ref(false)
 const onShowPopup = () => {
-  isVisable.value = true
+  isVisible.value = true
 }
 </script>
-
-<style lang="scss" scoped></style>

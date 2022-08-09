@@ -10,7 +10,7 @@ import MobileNavigation from './mobile/index.vue'
 import PcNavigation from './pc/index.vue'
 
 const store = useStore()
-store.dispatch('category/getCategorys')
+store.dispatch('category/getCategories')
 </script>
 
 <style lang="scss" scoped></style>

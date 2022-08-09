@@ -19,14 +19,14 @@
       </div>
       <!-- items -->
       <li
-        v-for="(item, index) in $store.getters.categorys"
+        v-for="(item, index) in $store.getters.categories"
         :key="item.id"
         class="shrink-0 px-1.5 py-0 z-10 duration-200 hover:text-zinc-900 dark:hover:text-zinc-300 text-base font-bold h-4 leading-4 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-900 rounded mr-1 mb-1"
         :class="{
           ' text-zinc-900 bg-zinc-200 dark:bg-zinc-900 dark:text-zinc-300':
-            currentIndex === index
+            $store.getters.currentCategoryIndex === index
         }"
-        @click="onItemClick(index)"
+        @click="onItemClick(item)"
       >
         {{ item.name }}
       </li>
@@ -35,14 +35,18 @@
 </template>
 
 <script setup>
+import { useStore } from 'vuex'
 import { ref } from 'vue'
+
+const store = useStore()
 const isOpen = ref(false)
-const currentIndex = ref(0)
+
 const triggerState = () => {
   isOpen.value = !isOpen.value
 }
-const onItemClick = index => {
-  currentIndex.value = index
+
+const onItemClick = item => {
+  store.commit('app/setCurrentCategory', item)
 }
 </script>
 

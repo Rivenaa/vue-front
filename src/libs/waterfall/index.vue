@@ -1,6 +1,5 @@
 <template>
   <div
-    id="aa"
     class="relative"
     ref="containerTarget"
     :style="{

@@ -18,7 +18,7 @@
         v-model="inputValue"
         @keyup.enter="onSearchHandler"
         @focus="onFocusHandler"
-        @blur="onBlurHander"
+        @blur="onBlurHandler"
       />
       <!-- 删除按钮 -->
       <Svg-icon
@@ -44,7 +44,7 @@
       <div
         v-if="$slots.dropdown"
         v-show="isFocus"
-        class="max-h-[368px] w-full text-base overflow-auto bg-white dark:bg-zinc-900 absolute z-20 left-0 top-[56px] p-2 rounded border border-zinc-200 dark:border-zinc-600 duration-200 hover:shadow-2xl dark:text-zinc-300"
+        class="max-h-[368px] w-full text-base overflow-auto bg-white dark:bg-zinc-900 absolute z-20 left-0 top-[56px] p-2 rounded-sm border border-zinc-200 dark:border-zinc-600 duration-200 hover:shadow-2xl dark:text-zinc-300 scrollbar-thin scrollbar-thumb-transparent lg:scrollbar-thumb-zinc-200 lg:dark:scrollbar-thumb-zinc-800 scrollbar-track-transparent"
       >
         <slot name="dropdown" />
       </div>
@@ -70,7 +70,6 @@ const EMIT_BLUR = 'blur'
  */
 import { ref, watch } from 'vue'
 import { useVModel, onClickOutside } from '@vueuse/core'
-import { debounce } from 'throttle-debounce'
 
 const props = defineProps({
   modelValue: {
@@ -93,7 +92,7 @@ const isFocus = ref(false)
 const inputValue = useVModel(props)
 
 watch(inputValue, newValue => {
-  debounceFunc(newValue)
+  emits(EMIT_INPUT, newValue)
 })
 
 const onClearClick = () => {
@@ -102,7 +101,6 @@ const onClearClick = () => {
 }
 
 const onSearchHandler = () => {
-  console.log(1)
   emits(EMIT_SEARCH, inputValue.value)
 }
 
@@ -117,13 +115,9 @@ onClickOutside(containerTarget, () => {
 })
 
 // 失去焦点
-const onBlurHander = () => {
+const onBlurHandler = () => {
   emits(EMIT_BLUR)
 }
-
-const debounceFunc = debounce(200, value => {
-  emits(EMIT_INPUT, value.trim())
-})
 </script>
 
 <style lang="scss" scoped>

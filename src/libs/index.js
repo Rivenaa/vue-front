@@ -1,4 +1,6 @@
 import { defineAsyncComponent } from 'vue'
+export { confirm } from './confirm/index'
+export { message } from './message/index'
 import nameCase from '@/utils/nameCase'
 
 export default {

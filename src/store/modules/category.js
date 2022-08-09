@@ -4,18 +4,17 @@ import { getCategory } from '@/api/index.js'
 export default {
   namespaced: true,
   state: () => ({
-    categorys: CATEGORY_NOMAR_DATA
+    categories: CATEGORY_NOMAR_DATA
   }),
   mutations: {
-    setCategorys(state, newCategorys) {
-      state.categorys = [ALL_CATEGORY_ITEM, ...newCategorys]
+    setCategories(state, newCategories) {
+      state.categories = [ALL_CATEGORY_ITEM, ...newCategories]
     }
   },
   actions: {
-    async getCategorys(context) {
-      const res = await getCategory()
+    async getCategories(context) {
       const { categorys } = await getCategory()
-      context.commit('setCategorys', categorys)
+      context.commit('setCategories', categorys)
     }
   }
 }

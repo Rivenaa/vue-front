@@ -4,15 +4,16 @@
       <!-- 蒙版 -->
       <transition name="fade">
         <div
-          v-if="isVisable"
+          v-if="isVisible"
           class="w-screen h-screen bg-zinc-900/80 z-40 fixed top-0 left-0"
-          @click="isVisable = false"
-        ></div>
+          @click="isVisible = false"
+        />
       </transition>
       <!-- 内容 -->
+      <!-- v-bind="$attrs" 主要是使用在组件存在多个根元素时，给组件指定的属性会写入到 v-bind="$attrs" 的元素上 -->
       <transition name="popup-down-up">
         <div
-          v-if="isVisable"
+          v-if="isVisible"
           v-bind="$attrs"
           class="w-screen bg-white dark:bg-zinc-800 z-50 fixed bottom-0"
         >
@@ -37,10 +38,10 @@ const props = defineProps({
 defineEmits(['update:modelValue'])
 
 const isLocked = useScrollLock(document.body)
-const isVisable = useVModel(props)
+const isVisible = useVModel(props)
 
 watch(
-  isVisable,
+  isVisible,
   newVal => {
     isLocked.value = newVal
   },

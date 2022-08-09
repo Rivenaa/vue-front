@@ -1,8 +1,16 @@
 <template>
   <div class="bg-white dark:bg-zinc-900 xl:dark:bg-zinc-800 rounded pb-1">
-    <div class="relative w-full rounded cursor-zoom-in group">
+    <div
+      class="relative w-full rounded cursor-zoom-in group"
+      :style="{
+        backgroundColor: randomRGB()
+      }"
+      @click="toDetail"
+    >
       <!-- 图片 -->
       <img
+        ref="imgTarget"
+        v-lazy
         :src="item.photo"
         title=""
         class="w-full rounded bg-transparent"
@@ -28,6 +36,7 @@
           icon="download"
           size="small"
           iconClass="fill-zinc-900 dark:fill-zinc-200"
+          @click="onDownload"
         />
         <!-- 全屏 -->
         <Button
@@ -36,6 +45,7 @@
           icon="full"
           size="small"
           iconClass="fill-zinc-900 dark:fill-zinc-200"
+          @click="onImgFullScreen"
         />
       </div>
     </div>
@@ -52,14 +62,52 @@
 </template>
 
 <script setup>
-import {} from 'vue'
-defineProps({
+import { ref } from 'vue'
+import { saveAs } from 'file-saver'
+import { message } from '@/libs'
+import { useFullscreen } from '@vueuse/core'
+import { randomRGB } from '@/utils/color'
+
+const props = defineProps({
   item: {
     type: Object,
     required: true
   },
   width: Number
 })
+
+const emit = defineEmits(['click'])
+
+const imgTarget = ref(null)
+
+const { enter: onImgFullScreen } = useFullscreen(imgTarget)
+
+function imgContainerCenter() {
+  const {
+    x: imgContainerX,
+    y: imgContainerY,
+    width: imgContainerWidth,
+    height: imgContainerHeight
+  } = imgTarget.value.getBoundingClientRect()
+  return {
+    translateX: parseInt(imgContainerX + imgContainerWidth / 2),
+    translateY: parseInt(imgContainerY + imgContainerHeight / 2)
+  }
+}
+
+function onDownload() {
+  message('success', '图片开始下载')
+  setTimeout(() => {
+    saveAs(props.item.photoDownLink)
+  }, 100)
+}
+
+function toDetail() {
+  emit('click', {
+    id: props.item.id,
+    location: imgContainerCenter()
+  })
+}
 </script>
 
 <style lang="scss" scoped></style>

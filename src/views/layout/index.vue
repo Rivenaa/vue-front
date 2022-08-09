@@ -11,8 +11,5 @@
 <script setup>
 import HeaderVue from './components/header/index.vue'
 import MainVue from './components/main.vue'
-import FloatingVue from './components/floating.vue'
-import {} from 'vue'
+import FloatingVue from './components/floating/floating.vue'
 </script>
-
-<style lang="scss" scoped></style>

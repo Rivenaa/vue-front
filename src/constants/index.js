@@ -32,6 +32,7 @@ export const CATEGORY_NOMAR_DATA = [
   { id: 'wedding_events', name: '婚礼', col: 2, urlname: 'wedding_events' }
 ]
 
+// 主题模式
 export const THEME_ARR = [
   {
     id: 0,
@@ -49,3 +50,14 @@ export const THEME_ARR = [
     name: '跟随系统'
   }
 ]
+
+// 登录方式
+export const LOGIN_TYPE = {
+  username: 'username',
+  QQ: 'QQ',
+  WX: 'WX'
+}
+
+// STS 上传数据
+export const REGION = 'oss-cn-hangzhou'
+export const BUCKET = 'vue-front'

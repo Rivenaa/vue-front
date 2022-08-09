@@ -4,20 +4,20 @@
   >
     <div class="flex items-center">
       <img
+        v-lazy
         title="logo"
-        class="h-4 cursor-pointer mr-2 rounded-sm"
+        class="guide-home h-4 cursor-pointer mr-2 rounded-sm"
         src="@/assets/images/lijia3.webp"
         @click="onToHome"
       />
-      <Header-search class="mr-1"></Header-search>
-      <Header-theme class="mr-1"></Header-theme>
-      <Header-my></Header-my>
+      <Header-search class="guide-search mr-1" />
+      <Header-theme class="guide-theme mr-1" />
+      <Header-my class="guide-my" />
     </div>
   </div>
 </template>
 
 <script setup>
-import {} from 'vue'
 import { useRouter } from 'vue-router'
 import HeaderSearch from './header-search/index.vue'
 import HeaderTheme from './header-theme.vue'

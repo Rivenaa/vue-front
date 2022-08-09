@@ -1,18 +1,13 @@
-import { ref, onMounted, computed, watch, nextTick, onUnmounted } from 'vue'
+import { ref, computed, watch, nextTick, onUnmounted } from 'vue'
+import { useElementBounding, watchDebounced } from '@vueuse/core'
 
 export default function useWaterfall(props) {
   // data
   const containerTarget = ref(null) // 容器实例
-  const containerWidth = ref(0) // 容器宽度
+  const { width: containerWidth } = useElementBounding(containerTarget) // 容器宽度
   const containerHeight = ref(0) // 容器高度
-  const columnWidth = ref(0)
   let columnHeightObj = {} // 每列高度
   let itemHeights = [] // 所有item高度
-
-  // onMounted
-  onMounted(() => {
-    useColumnWidth()
-  })
 
   // onUnmounted
   onUnmounted(() => {
@@ -23,7 +18,11 @@ export default function useWaterfall(props) {
 
   // computed
   const columnSpacingTotal = computed(
-    () => (props.column - 1) * props.columnSpacing
+    () => (props.column - 1) * props.columnSpacing // 间隙总宽度
+  )
+
+  const columnWidth = computed(
+    () => (containerWidth.value - columnSpacingTotal.value) / props.column // 列宽
   )
 
   // watch
@@ -49,30 +48,15 @@ export default function useWaterfall(props) {
     }
   )
 
-  watch(
-    // 监听列数的变化
-    () => props.column,
-    () => {
-      if (props.picturePreReading) {
-        columnWidth.value = 0
-        reset()
-      } else {
-        reset()
-      }
-    }
-  )
+  watchDebounced(containerWidth, () => {
+    // 重置所有的定位数据，因为 data 中进行了深度监听，所以该操作会触发 data 的 watch
+    props.data.forEach(item => {
+      item._style = null
+    }),
+      { debounce: 100 }
+  })
 
   // methods
-  function useContainerWidth() {
-    containerWidth.value = containerTarget.value.offsetWidth
-  }
-
-  function useColumnWidth() {
-    useContainerWidth()
-    columnWidth.value =
-      (containerWidth.value - columnSpacingTotal.value) / props.column
-  }
-
   function ctColumnHeightObj() {
     columnHeightObj = {}
     for (let i = 0; i < props.column; i++) {
@@ -135,17 +119,6 @@ export default function useWaterfall(props) {
   function increasingHeight(index) {
     const { minHeightColumn } = getMinHeightColumn()
     columnHeightObj[minHeightColumn] += itemHeights[index] + props.rowSpacing
-  }
-
-  // 重新构建瀑布流
-  function reset() {
-    setTimeout(() => {
-      useColumnWidth() // 重新计算列宽
-      // 重置所有的定位数据，因为 data 中进行了深度监听，所以该操作会触发 data 的 watch
-      props.data.forEach(item => {
-        item._style = null
-      })
-    }, 250)
   }
 
   function getMinHeightColumn() {

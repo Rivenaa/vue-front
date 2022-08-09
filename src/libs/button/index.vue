@@ -67,6 +67,7 @@ const EMIT_CLICK = 'click'
  *  5.处理点击事件
  */
 import { computed } from 'vue'
+import SvgIcon from '../svg-icon/index.vue'
 
 const props = defineProps({
   icon: String,

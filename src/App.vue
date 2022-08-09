@@ -1,6 +1,8 @@
 <template>
-  <!-- 移动端吸顶效果 -->
   <div class="h-screen w-screen fixed top-0 left-0">
-    <router-view />
+    <Transition-router-view
+      :routerType="$store.getters.routerType"
+      mainComponentName="home"
+    />
   </div>
 </template>

@@ -8,7 +8,7 @@
       <div
         ref="contentTarget"
         v-if="isVisible"
-        class="absolute p-1 z-20 bg-white dark:bg-zinc-900 border rounded-md dark:boder-zinc-700"
+        class="absolute p-1 z-20 bg-white dark:bg-zinc-900 border rounded-md dark:border-zinc-700"
         :style="contentStyle"
       >
         <!-- 匿名插槽 -->
@@ -118,7 +118,7 @@ const getElementSize = target => {
 <style lang="scss" scoped>
 .slide-enter-active,
 .slide-leave-active {
-  transition: opacity 0.3, transfrom 0.3s;
+  transition: opacity 0.3, transform 0.3s;
 }
 
 .slide-enter-from,
