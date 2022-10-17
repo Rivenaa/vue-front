@@ -16,6 +16,14 @@ export default [
         meta: {
           user: true
         }
+      },
+      {
+        path: '/member',
+        name: 'member',
+        component: () => import('@/views/member/index.vue'),
+        meta: {
+          user: true
+        }
       }
     ]
   },
@@ -25,13 +33,8 @@ export default [
     component: () => import('@/views/pins/index.vue')
   },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('@/views/login-register/login/index.vue')
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: () => import('@/views/login-register/register/index.vue')
+    path: '/login-register',
+    name: 'login-register',
+    component: () => import('@/views/login-register/index.vue')
   }
 ]

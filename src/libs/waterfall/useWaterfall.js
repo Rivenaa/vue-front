@@ -37,7 +37,7 @@ export default function useWaterfall(props) {
       }
       await nextTick()
       if (props.picturePreReading) {
-        waitImgComplate()
+        waitImgComplete()
       } else {
         useItemHeight()
       }
@@ -65,7 +65,7 @@ export default function useWaterfall(props) {
   }
 
   // 图片预加载
-  function waitImgComplate() {
+  function waitImgComplete() {
     itemHeights = []
     let itemEls = [...document.getElementsByClassName('waterfall-item')] // 获取所有item元素
     const imgEls = []
@@ -73,7 +73,7 @@ export default function useWaterfall(props) {
       imgEls.push(...el.getElementsByTagName('img')) // 获取所有 item 元素下的 img标签
     })
     const imgAllSrc = imgEls.map(item => item.src) // 获取所有 img 标签的 src
-    onComplateImgs(imgAllSrc).then(() => {
+    onCompleteImgs(imgAllSrc).then(() => {
       // 图片加载完成，获取高度
       itemEls.forEach(el => {
         itemHeights.push(el.offsetHeight)
@@ -133,7 +133,7 @@ export default function useWaterfall(props) {
 }
 
 /* 监听图片数据加载完成 */
-function onComplateImgs(imgs) {
+function onCompleteImgs(imgs) {
   // promise 集合
   const promiseArr = []
   // 循环构建 promiseArr

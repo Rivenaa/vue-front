@@ -1,10 +1,10 @@
-import { ALL_CATEGORY_ITEM, CATEGORY_NOMAR_DATA } from '@/constants/index'
+import { ALL_CATEGORY_ITEM, CATEGORY_DEFAULT_DATA } from '@/constants/index'
 import { getCategory } from '@/api/index.js'
 
 export default {
   namespaced: true,
   state: () => ({
-    categories: CATEGORY_NOMAR_DATA
+    categories: CATEGORY_DEFAULT_DATA
   }),
   mutations: {
     setCategories(state, newCategories) {
@@ -13,8 +13,8 @@ export default {
   },
   actions: {
     async getCategories(context) {
-      const { categorys } = await getCategory()
-      context.commit('setCategories', categorys)
+      const { categorys: categories } = await getCategory()
+      context.commit('setCategories', categories)
     }
   }
 }

@@ -77,7 +77,7 @@ const store = useStore()
 
 function toLogin() {
   store.commit('app/setRouterType', 'push')
-  router.push('/login')
+  router.push('/login-register')
 }
 
 function onItemClick(item) {

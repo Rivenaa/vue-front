@@ -5,10 +5,11 @@
       @before-enter="beforeEnter"
       @after-leave="afterLeave"
     >
-      <keep-alive>
+      <keep-alive :include="viralTaskStack">
         <component
           :is="Component"
           :class="{ 'fixed top-0 left-0 w-screen z-50': isAnimation }"
+          :key="$router.fullPath"
         />
       </keep-alive>
     </transition>
@@ -52,9 +53,21 @@ const props = defineProps({
 const router = useRouter()
 const transitionName = ref('')
 const isAnimation = ref('false')
+const viralTaskStack = ref([props.mainComponentName]) // 虚拟任务栈
 
 router.beforeEach((to, from) => {
   transitionName.value = props.routerType
+  if (props.routerType === ROUTER_TYPE_PUSH) {
+    // 入栈
+    viralTaskStack.value.push(to.name)
+  } else if (props.routerType === ROUTER_TYPE_BACK) {
+    // 出栈
+    viralTaskStack.value.pop()
+  }
+
+  if (to.name === props.mainComponentName) {
+    clearStack()
+  }
 })
 
 function beforeEnter() {
@@ -62,6 +75,9 @@ function beforeEnter() {
 }
 function afterLeave() {
   isAnimation.value = false
+}
+function clearStack() {
+  viralTaskStack.value = [props.mainComponentName]
 }
 </script>
 

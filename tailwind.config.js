@@ -4,6 +4,13 @@ module.exports = {
   // tailwind 应用
   content: ['./index.html', './src/**/*.{vue,js}'],
   theme: {
+    minWidth: {
+      '1/3': '33%',
+      '1/4': '25%'
+    },
+    minHeight: {
+      '1/2': '50%'
+    },
     extend: {
       fontSize: {
         xs: ['0.25rem', '0.35rem'],
@@ -14,7 +21,8 @@ module.exports = {
       },
       boxShadow: {
         'l-white': '-10px 0 10px white',
-        'l-zinc': '-10px 0 10px #18181b'
+        'l-zinc': '-10px 0 10px #18181b',
+        'l-black': '0 0.9rem 1.7rem black'
       },
       height: {
         header: '72px',

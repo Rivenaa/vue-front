@@ -7,7 +7,7 @@
       <!-- 滑块 -->
       <li
         ref="sliderTarget"
-        class="absolute h-[22px] bg-zinc-900 dark:bg-zinc-800 rounded-lg duration-200"
+        class="absolute h-[24px] bg-zinc-900 dark:bg-zinc-800 rounded-lg duration-200"
         :style="sliderStyle"
       />
       <!-- items -->
@@ -32,7 +32,7 @@
       </li>
     </ul>
     <Popup v-model="isVisible">
-      <Menu-vue @onItemClick="onItemClick(item)" />
+      <Menu-vue @onItemClick="onItemClick" />
     </Popup>
   </div>
 </template>

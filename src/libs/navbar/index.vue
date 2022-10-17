@@ -27,7 +27,7 @@
       class="w-5 h-full absolute right-0 flex items-center justify-center"
       @click="onClickRight"
     >
-      <slot name="right"></slot>
+      <slot name="right" />
     </div>
   </div>
 </template>

@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="containerTarget"
     class="h-full overflow-auto bg-white dark:bg-zinc-800 duration-300 scrollbar-thin scrollbar-thumb-transparent lg:scrollbar-thumb-zinc-200 lg:dark:scrollbar-thumb-zinc-900 scrollbar-track-transparent"
   >
     <Navigation-vue />
@@ -39,6 +40,11 @@
     </Trigger-menu>
   </div>
 </template>
+<script>
+export default {
+  name: 'home'
+}
+</script>
 
 <script setup>
 import NavigationVue from './components/navigation/index.vue'
@@ -46,11 +52,25 @@ import ListVue from './components/list/index.vue'
 import { isMobileTerminal } from '@/utils/flexible'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { useScroll } from '@vueuse/core'
+import { onActivated, ref } from 'vue'
 
 const store = useStore()
 const router = useRouter()
+const containerTarget = ref(null)
+const { y: containerTargetScrollY } = useScroll(containerTarget)
 
-function onVipClick() {}
+onActivated(() => {
+  if (!containerTarget.value) return
+  containerTarget.value.scrollTop = containerTargetScrollY.value
+})
+
+function onVipClick() {
+  store.commit('app/setRouterType', 'push')
+  if (store.getters.token) {
+    router.push('member')
+  }
+}
 
 function onMyClick() {
   store.commit('app/setRouterType', 'push')

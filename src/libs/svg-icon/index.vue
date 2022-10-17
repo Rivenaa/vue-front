@@ -17,5 +17,3 @@ const props = defineProps({
 
 const symbolId = computed(() => `#icon-${props.name}`)
 </script>
-
-<style lang="scss" scoped></style>

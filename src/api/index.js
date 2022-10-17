@@ -1,17 +1,13 @@
 import request from '@/service/index'
 
-/**
- *  获取分类列表
- */
+/* 获取分类列表 */
 export const getCategory = () => {
   return request({
     url: '/category'
   })
 }
 
-/**
- *  获取 pexels 列表
- */
+/* 获取 pexels 列表 */
 export const getPexelsList = params => {
   return request({
     url: '/pexels/list',
@@ -19,9 +15,7 @@ export const getPexelsList = params => {
   })
 }
 
-/**
- *  获取搜索提示
- */
+/* 获取搜索提示 */
 export const getHint = q => {
   return request({
     url: '/pexels/hint',
@@ -29,18 +23,14 @@ export const getHint = q => {
   })
 }
 
-/**
- *  获取主题
- */
+/* 获取主题 */
 export const getThemes = () => {
   return request({
     url: '/pexels/themes'
   })
 }
 
-/**
- *  获取指定图片数据
- */
+/* 获取指定图片数据 */
 export const getPexels = id => {
   return request({
     url: `/pexels/${id}`
@@ -94,5 +84,12 @@ export const putProfile = data => {
 export const getSts = () => {
   return request({
     url: '/user/sts'
+  })
+}
+
+/* 获取VIP支付数据 */
+export const getVipPayList = () => {
+  return request({
+    url: '/user/vip/pay/list'
   })
 }

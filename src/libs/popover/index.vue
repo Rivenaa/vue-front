@@ -43,7 +43,7 @@ const props = defineProps({
       const result = placementEnum.includes(val)
       if (!result) {
         throw new Error(
-          `参数 placememnt 必须为 ${placementEnum.join('、')}中的一项`
+          `参数 placement 必须为 ${placementEnum.join('、')}中的一项`
         )
       }
       return result

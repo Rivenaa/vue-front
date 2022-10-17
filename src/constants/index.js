@@ -6,7 +6,7 @@ export const ALL_CATEGORY_ITEM = {
   name: '全部'
 }
 // category 的初始化数据
-export const CATEGORY_NOMAR_DATA = [
+export const CATEGORY_DEFAULT_DATA = [
   ALL_CATEGORY_ITEM,
   { id: 'web_app_icon', name: 'UI/UX', col: 1, urlname: 'web_app_icon' },
   { id: 'design', name: '平面', col: 1, urlname: 'design' },

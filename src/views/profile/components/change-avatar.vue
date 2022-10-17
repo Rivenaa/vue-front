@@ -127,5 +127,3 @@ async function onChangeProfile(avatar) {
   close()
 }
 </script>
-
-<style lang="scss" scoped></style>
