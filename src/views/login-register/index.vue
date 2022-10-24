@@ -1,27 +1,13 @@
 <template>
   <div class="body">
-    <div class="container text-xl">
+    <div class="container text-lg">
       <div ref="formBoxRef" class="form-box">
-        <VeeForm ref="registerRef" class="register hidden">
-          <h1>register</h1>
-          <VeeField
-            type="text"
-            placeholder="用户名"
-            name="username"
-            autocomplete="on"
-            :rules="validateUsername"
-          />
-          <VeeErrorMessage name="username" />
-          <VeeField type="password" placeholder="密码" />
-          <VeeField type="password" placeholder="确认密码" />
-          <button>注册</button>
-        </VeeForm>
-        <VeeForm ref="loginRef" class="login">
-          <h1>login</h1>
-          <Vee-field type="text" placeholder="用户名" />
-          <Vee-field type="password" placeholder="密码" />
-          <button>登录</button>
-        </VeeForm>
+        <div v-if="isFormVisible" class="w-full">
+          <Register />
+        </div>
+        <div v-if="!isFormVisible" class="w-full">
+          <Login />
+        </div>
       </div>
       <div class="box box-left">
         <img src="@/assets/images/che.jpg" alt="" />
@@ -37,30 +23,21 @@
 
 <script setup>
 import { ref } from 'vue'
-import {
-  Form as VeeForm,
-  Field as VeeField,
-  ErrorMessage as VeeErrorMessage
-} from 'vee-validate'
-/* import {
-  validateUsername,
-  validatePassword,
-  validateConfirmPassword
-} from './validate' */
+
+import Register from './components/register.vue'
+import Login from './components/login.vue'
 
 const formBoxRef = ref(null)
-const loginRef = ref(null)
-const registerRef = ref(null)
+
+const isFormVisible = ref(false)
 
 function toLogin() {
   formBoxRef.value.style.transform = 'translateX(0%)'
-  registerRef.value.classList.add('hidden')
-  loginRef.value.classList.remove('hidden')
+  isFormVisible.value = false
 }
 function toRegister() {
   formBoxRef.value.style.transform = 'translateX(100%)'
-  loginRef.value.classList.add('hidden')
-  registerRef.value.classList.remove('hidden')
+  isFormVisible.value = true
 }
 </script>
 
@@ -95,64 +72,64 @@ function toRegister() {
       z-index: 2;
       transition: 0.5s ease-in-out;
 
-      .register,
-      .login {
+      .form {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 100%;
-        h1 {
-          text-align: center;
-          margin-bottom: 25px;
-          text-transform: uppercase;
-          color: #fff;
-          letter-spacing: 5px;
-        }
-        input {
-          background-color: transparent;
-          width: 70%;
-          color: #fff;
-          border: none;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-          padding: 10px 0;
-          text-indent: 10px;
-          margin: 8px 0;
-          font-size: 14px;
-          letter-spacing: 2px;
-        }
-        input::placeholder {
-          color: #fff;
-        }
-        input:focus {
-          color: #a262ad;
-          outline: none;
-          border: 2px solid #a262ad80;
-          transition: 0.5s;
-        }
-        input:focus::placeholder {
-          opacity: 0;
-        }
-        button {
-          width: 70%;
-          margin-top: 35px;
-          background-color: #f6f6f6;
-          outline: none;
-          border-radius: 8px;
-          padding: 13px;
-          color: #a262ad;
-          letter-spacing: 2px;
-          border: none;
-          cursor: pointer;
-          font-size: 0.4rem;
-        }
-        button:hover {
-          background-color: #a262ad;
-          color: #f6f6f6;
-          transition: background-color 0.5s ease;
-        }
       }
-      .hidden {
-        display: none;
+      h1 {
+        text-align: center;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+        color: #fff;
+        letter-spacing: 5px;
+      }
+      .input {
+        background-color: transparent;
+        width: 75%;
+        height: 30px;
+        color: #fff;
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        padding: 10px 0;
+        text-indent: 10px;
+        margin: 8px 0;
+        font-size: 14px;
+        letter-spacing: 2px;
+      }
+      .input::placeholder {
+        color: #fff;
+      }
+      .input:focus {
+        color: #a262ad;
+        outline: none;
+        border: 2px solid #a262ad80;
+        transition: 0.5s;
+      }
+      .input:focus::placeholder {
+        opacity: 0;
+      }
+      .error-message {
+        font-size: 0.3rem;
+        color: rgb(214, 73, 73);
+      }
+      button {
+        width: 70%;
+        margin-top: 35px;
+        background-color: #f6f6f6;
+        outline: none;
+        border-radius: 8px;
+        padding: 13px;
+        color: #a262ad;
+        letter-spacing: 2px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.4rem;
+      }
+      button:hover {
+        background-color: #a262ad;
+        color: #f6f6f6;
+        transition: background-color 0.5s ease;
       }
     }
 
@@ -166,7 +143,7 @@ function toRegister() {
       top: 50%;
       transform: translateY(-50%);
       img {
-        width: 150px;
+        width: 200px;
         height: 150px;
         opacity: 0.9;
         margin: 40px 0;

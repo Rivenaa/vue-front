@@ -26,6 +26,7 @@ export default {
       context.commit('setToken', data.token)
       // 获取用户信息
       context.dispatch('profile')
+      console.log(data)
     },
     async profile(context) {
       const data = await getProfile()
@@ -35,7 +36,7 @@ export default {
         'success',
         `欢迎您 ${
           data.vipLevel
-            ? '尊贵的VIP' + data.vipLevel + `用户 ` + data.nickname
+            ? '尊贵的VIP' + data.vipLevel + '用户' + data.nickname
             : data.nickname
         }`,
         6000
